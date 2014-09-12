@@ -2,9 +2,9 @@
 	"manifest_version": 2,
 	"name": "TFS Notifier",
 	"description": "This extension enables popup notifications for Team Foundation Server team rooms.",
-	"version": "1.0",
+	"version": "0.1.0",
 	"content_scripts": [{
 		"matches": ["*://*/*"],
-		"js": ["jquery.js", "tfsNotifier.js", "background.js"]
+		"js": ["jquery.js", "visibility.js", "tfsNotifier.js", "background.js"]
 	}]
 }
