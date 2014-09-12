@@ -17,15 +17,20 @@ var tfsNotifier = (function($, window) {
         var lastMessage = getLastMessage();
 
         window.setInterval(function() {
+
             var currentMessage = getLastMessage();
 
-            if(lastMessage.id != currentMessage.id && lastMessage.id != undefined) {
-                var n = new Notification(currentMessage.sender, { body: currentMessage.message,
-                    icon: currentMessage.image });
-                n.onshow = function () {
-                    setTimeout(n.close, timeout);
+            if(!$('body').hasClass("visible")) {
+
+                if(lastMessage.id != currentMessage.id && lastMessage.id != undefined) {
+                    var n = new Notification(currentMessage.sender, { body: currentMessage.message,
+                        icon: currentMessage.image });
+                    n.onshow = function () {
+                        setTimeout(n.close, timeout);
+                    }
                 }
-            }
+
+            } 
 
             lastMessage = currentMessage;
 
