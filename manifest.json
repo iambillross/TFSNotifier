@@ -6,5 +6,6 @@
 	"content_scripts": [{
 		"matches": ["*://*/tfs/_rooms*"],
 		"js": ["jquery.js", "visibility.js", "tfsNotifier.js", "background.js"]
-	}]
+	}],
+	"options_page": "options.html"
 }
