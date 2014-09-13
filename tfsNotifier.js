@@ -1,5 +1,9 @@
-var tfsNotifier = (function($, window) {
+var tfsNotifier = (function($, window, optionsManager) {
     var tfsNotifier = {};
+    var options = {
+        'interval': 2000,
+        'timeout': 5000
+    };
 
     function getLastMessage() {
 
@@ -13,7 +17,34 @@ var tfsNotifier = (function($, window) {
         return lastMessage;
     };
 
-    function run(interval, timeout) {
+    function init() {
+
+        //TODO: Reduce these to one call
+        optionsManager.getOption('interval', function(result) {
+            if(!$.isEmptyObject(result)) {
+                options.interval = result.interval;
+            }
+        });
+
+        optionsManager.getOption('timeout', function(result) {
+            if(!$.isEmptyObject(result)) {
+                options.timeout = result.timeout;
+            }
+        });
+
+        //Register storage listener for settings
+        //TODO: Move this to the storage manager
+        chrome.storage.onChanged.addListener(function(changes, areaName) {
+            //If any keys have been changed
+                //Compare the changed keys to the options object
+                //Set new option value
+            console.log('Changes:' + changes);
+        });
+    };
+
+    function run() {
+        init();
+
         var lastMessage = getLastMessage();
 
         window.setInterval(function() {
@@ -26,19 +57,19 @@ var tfsNotifier = (function($, window) {
                     var n = new Notification(currentMessage.sender, { body: currentMessage.message,
                         icon: currentMessage.image });
                     n.onshow = function () {
-                        setTimeout(n.close, timeout);
+                        setTimeout(n.close, options.timeout);
                     }
                 }
 
-            } 
+            }
 
             lastMessage = currentMessage;
 
-        }, interval);
+        }, options.interval);
     };
 
     tfsNotifier.run = run;
 
     return tfsNotifier;
 
-}(jQuery, window));
+}(jQuery, window, optionsManager));

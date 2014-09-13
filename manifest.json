@@ -5,7 +5,10 @@
 	"version": "0.1.0",
 	"content_scripts": [{
 		"matches": ["*://*/tfs/_rooms*"],
-		"js": ["jquery.js", "visibility.js", "tfsNotifier.js", "background.js"]
+		"js": ["jquery.js", "visibility.js", "optionsManager.js", "tfsNotifier.js", "background.js"]
 	}],
-	"options_page": "options.html"
+	"options_page": "options.html",
+	"permissions": [
+		"storage"
+	]
 }
